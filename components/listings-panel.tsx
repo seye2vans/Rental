@@ -343,7 +343,7 @@ export default function ListingsPanel({
   const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [sortBy, setSortBy] = useState<
-    "recommended" | "price-low" | "price-high" | "newest"
+    "recommended" | "price-low" | "price-high" | "newest" | "lot-size"
   >("recommended");
 
   const filteredListings = useMemo(() => {
@@ -362,7 +362,6 @@ export default function ListingsPanel({
       );
     }
 
-    // Filter by price
     if (filters?.price) {
       const { min, max } = filters.price;
       results = results.filter(
@@ -370,7 +369,6 @@ export default function ListingsPanel({
       );
     }
 
-    // Filter by beds
     if (filters?.beds && filters.beds !== "Any") {
       results = results.filter((listing) => {
         if (filters.beds === "1 bed") return listing.bedrooms === 1;
@@ -380,7 +378,6 @@ export default function ListingsPanel({
       });
     }
 
-    // Filter by property type
     if (filters?.propertyType && filters.propertyType !== "All types") {
       results = results.filter(
         (listing) =>
@@ -388,7 +385,7 @@ export default function ListingsPanel({
       );
     }
 
-    // Apply sorting
+    
     switch (sortBy) {
       case "price-low":
         results.sort((a, b) => a.price - b.price);
@@ -421,7 +418,6 @@ export default function ListingsPanel({
 
   return (
     <div className="bg-white">
-      {/* Header - Keep original design */}
       <div className="sticky top-0 bg-white border-b border-border p-4 sm:p-6 z-10">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
@@ -445,19 +441,20 @@ export default function ListingsPanel({
                   | "price-low"
                   | "price-high"
                   | "newest"
+                  | "lot-size"
               )
             }
             className="text-primary font-semibold text-sm hover:underline whitespace-nowrap cursor-pointer px-2 py-1 bg-white border border-primary rounded"
           >
             <option value="recommended">Sort: Recommended</option>
-            <option value="price-low">Sort: Price (Low to High)</option>
-            <option value="price-high">Sort: Price (High to Low)</option>
-            <option value="newest">Sort: Newest</option>
+            <option value="price-low"> Payment (Low to High)</option>
+            <option value="price-high"> Payment (High to Low)</option>
+            <option value="newest"> Newest</option>
+            <option value="lot-size"> Lot size</option>
           </select>
         </div>
       </div>
 
-      {/* Listings - Keep original design */}
       <div className="divide-y divide-border">
         {filteredListings.length > 0 ? (
           filteredListings.map((listing) => (
@@ -479,7 +476,7 @@ export default function ListingsPanel({
       {selectedListing && (
         <ListingDetailsModal
           listing={{
-            id: Number(selectedListing.id), // or keep string if you change modal
+            id: Number(selectedListing.id), 
             title: selectedListing.title,
             location: selectedListing.location,
             price: `$${selectedListing.price}`,
