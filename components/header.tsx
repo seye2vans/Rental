@@ -13,9 +13,9 @@ export default function Header() {
 
   const navItems = [
     { label: "Rent", href: "#" },
-    { label: "Sell", href: "#" },
-    { label: "Get a mortgage", href: "#" },
-    { label: "Find an agent", href: "#" },
+    // { label: "Sell", href: "#" },
+    // { label: "Get a mortgage", href: "#" },
+    // { label: "Find an agent", href: "#" },
   ]
 
   useEffect(() => {
@@ -175,7 +175,7 @@ export default function Header() {
             )}
 
             <div className="hidden sm:flex items-center gap-4 md:gap-6">
-              <button className="text-foreground hover:text-primary font-medium text-sm transition-colors">
+              {/* <button className="text-foreground hover:text-primary font-medium text-sm transition-colors">
                 Manage rentals
               </button>
               <button className="text-foreground hover:text-primary font-medium text-sm transition-colors">
@@ -183,7 +183,7 @@ export default function Header() {
               </button>
               <button className="text-foreground hover:text-primary font-medium text-sm transition-colors">
                 Get help
-              </button>
+              </button> */}
               <Link href="/signin" className="text-black font-semibold text-sm hover:opacity-80 transition-opacity">
                 Sign in
               </Link>
