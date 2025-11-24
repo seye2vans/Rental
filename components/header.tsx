@@ -254,6 +254,7 @@ export default function Header() {
                   placeholder="Enter an address, neighborhood, city, or ZIP code"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
+                  suppressHydrationWarning
                   className="flex-1 bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground"
                 />
                 <button type="submit" className="p-1.5 hover:bg-gray-100 rounded transition-colors">

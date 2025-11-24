@@ -37,7 +37,7 @@ export default function LandingPage() {
   const [searchHistory, setSearchHistory] = useState<SearchHistory[]>([])
   const [mounted, setMounted] = useState(false)
   const [continueSearchProperties, setContinueSearchProperties] = useState<Property[]>([])
-  const [isSearching, setIsSearching] = useState(false) // Declare setIsSearching variable
+  const [isSearching, setIsSearching] = useState(false)
   const [isGettingLocation, setIsGettingLocation] = useState(false)
 
   useEffect(() => {
@@ -69,7 +69,7 @@ export default function LandingPage() {
         price: listing.price,
         beds: listing.bedrooms,
         baths: listing.bathrooms,
-        sqft: 800 + Number.parseInt(listing.id) * 100, // Generate sqft based on listing
+        sqft: 800 + Number.parseInt(listing.id) * 100,
         status: "Active",
         address: listing.address,
         badge: listing.offer || undefined,
@@ -84,7 +84,6 @@ export default function LandingPage() {
     const searchTerm = search.location.toLowerCase().trim()
     const searchCity = searchTerm.split(",")[0].trim()
 
-    // Find exact or partial matches
     let filteredListings = SAMPLE_LISTINGS.filter(
       (listing) =>
         listing.location.toLowerCase().includes(searchCity) ||
@@ -95,14 +94,12 @@ export default function LandingPage() {
 
     let noMatches = false
 
-    // If nothing found → use ALL listings as fallback
     if (filteredListings.length === 0) {
       console.log("[v0] No matches found → fallback to other locations")
       noMatches = true
       filteredListings = SAMPLE_LISTINGS
     }
 
-    // Convert to card-friendly format
     const properties: Property[] = filteredListings.slice(0, 6).map((listing) => ({
       id: listing.id,
       image: listing.images[0],
@@ -118,8 +115,6 @@ export default function LandingPage() {
     }))
 
     setContinueSearchProperties(properties)
-
-    // Save whether the search returned zero results
     setNoMatchFound(noMatches)
   }
 
@@ -199,7 +194,6 @@ export default function LandingPage() {
         const { latitude, longitude } = position.coords
 
         try {
-          // Reverse geocode to get address from coordinates
           const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
           const response = await fetch(
             `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${token}`,
@@ -301,6 +295,7 @@ export default function LandingPage() {
                     onFocus={() => setShowSearchDropdown(true)}
                     onBlur={() => setTimeout(() => setShowSearchDropdown(false), 200)}
                     className="flex-1 bg-transparent outline-none text-sm sm:text-base text-foreground placeholder:text-muted-foreground"
+                    suppressHydrationWarning
                   />
                   <button type="submit" className="p-2 hover:bg-gray-100 rounded flex-shrink-0">
                     <Search size={20} className="text-gray-400" />
@@ -423,7 +418,6 @@ export default function LandingPage() {
                     if (searchHistory.length > 0) {
                       handleContinueSearch(searchHistory[0])
                     } else {
-                      // Navigate to rentals with property location
                       const params = new URLSearchParams()
                       params.set("location", property.location)
                       window.location.href = `/rentals?${params.toString()}`
@@ -491,42 +485,40 @@ export default function LandingPage() {
                 desc: "Browse verified rentals, compare neighborhoods, and discover a place that fits your lifestyle.",
                 btn: "Find a local agent",
                 icon: "👥",
+                href: "/rentals?propertyType=Home",
               },
               {
                 title: "Book a Shortlet",
                 desc: "Explore premium short-term rentals with flexible stay options and instant availability.",
                 btn: "Find rentals",
                 icon: "🏘️",
+                href: "/rentals?propertyType=Shortlet",
               },
               {
                 title: "Rent a Hostel",
                 desc: "Find affordable, comfortable hostel stays anywhere. Compare rooms, check availability, and reserve your spot instantly.",
-                btn: "See your options",
+                btn: "See your option",
                 icon: "🔑",
+                href: "/rentals?propertyType=Hostel",
               },
             ].map((action, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-2xl p-6 sm:p-8 md:p-10 border border-gray-200 hover:shadow-xl transition-shadow text-center"
-              >
-                {/* Icon Box */}
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-blue-100 rounded-xl mx-auto mb-4 sm:mb-6 flex items-center justify-center">
-                  <span className="text-4xl sm:text-5xl">{action.icon}</span>
+              <Link href={action.href} key={i}>
+                <div className="bg-white rounded-2xl p-6 sm:p-8 md:p-10 border border-gray-200 hover:shadow-xl transition-shadow text-center cursor-pointer h-full">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-blue-100 rounded-xl mx-auto mb-4 sm:mb-6 flex items-center justify-center">
+                    <span className="text-4xl sm:text-5xl">{action.icon}</span>
+                  </div>
+
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4">
+                    {action.title}
+                  </h3>
+
+                  <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 leading-relaxed">{action.desc}</p>
+
+                  <button className="px-6 sm:px-8 py-2.5 sm:py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors text-sm sm:text-base">
+                    {action.btn}
+                  </button>
                 </div>
-
-                {/* Heading */}
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4">
-                  {action.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 leading-relaxed">{action.desc}</p>
-
-                {/* Button */}
-                <button className="px-6 sm:px-8 py-2.5 sm:py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors text-sm sm:text-base">
-                  {action.btn}
-                </button>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -535,7 +527,6 @@ export default function LandingPage() {
       {/* About Zillow's Recommendations Section */}
       <div className="bg-white px-4 sm:px-6 lg:px-8 py-12 sm:py-16 border-t border-gray-200">
         <div className="max-w-6xl mx-auto">
-          {/* Heading and Description */}
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">About Zillow's Recommendations</h2>
             <p className="text-sm sm:text-base text-gray-600 max-w-4xl mx-auto leading-relaxed">

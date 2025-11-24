@@ -2,7 +2,7 @@
 import { useState, useMemo } from "react"
 import ListingCard from "./listing-card"
 import ListingDetailsModal from "./listing-details-modal"
-import { SAMPLE_LISTINGS } from "../lib/sample-listing"
+import { SAMPLE_LISTINGS } from "@/lib/sample-listing"
 
 interface MoreOptionsFilters {
   moveInDate?: string
@@ -52,6 +52,10 @@ export default function ListingsPanel({ searchLocation = "", filters }: Listings
   const filteredListings = useMemo(() => {
     let results = [...SAMPLE_LISTINGS]
 
+    if (filters?.propertyType && filters.propertyType !== "All types") {
+      results = results.filter((listing) => listing.type.toLowerCase() === filters.propertyType.toLowerCase())
+    }
+
     if (searchLocation) {
       const searchTerm = searchLocation.toLowerCase().trim()
       const searchCity = searchTerm.split(",")[0].trim()
@@ -77,10 +81,6 @@ export default function ListingsPanel({ searchLocation = "", filters }: Listings
         if (filters.beds === "3+ beds") return listing.bedrooms >= 3
         return true
       })
-    }
-
-    if (filters?.propertyType && filters.propertyType !== "All types") {
-      results = results.filter((listing) => listing.type.toLowerCase() === filters.propertyType.toLowerCase())
     }
 
     switch (sortBy) {

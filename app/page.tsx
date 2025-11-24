@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import LandingPage from "./landing/page"
 
 
