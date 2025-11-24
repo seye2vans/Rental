@@ -98,16 +98,16 @@ export default function Header() {
                     <div>
                       <h3 className="font-semibold text-base mb-6 text-foreground">Lyons rentals</h3>
                       <div className="space-y-4">
-                        <a href="#" className="block text-sm text-primary hover:underline leading-relaxed">
+                        <a href="/rentals" className="block text-sm text-primary hover:underline leading-relaxed">
                           Apartments for rent
                         </a>
-                        <a href="#" className="block text-sm text-primary hover:underline leading-relaxed">
+                        <a href="/rentals" className="block text-sm text-primary hover:underline leading-relaxed">
                           Houses for rent
                         </a>
-                        <a href="#" className="block text-sm text-primary hover:underline leading-relaxed">
+                        <a href="/rentals" className="block text-sm text-primary hover:underline leading-relaxed">
                           All rental listings
                         </a>
-                        <a href="#" className="block text-sm text-primary hover:underline leading-relaxed">
+                        <a href="/rentals" className="block text-sm text-primary hover:underline leading-relaxed">
                           All rental buildings
                         </a>
                       </div>
@@ -149,7 +149,7 @@ export default function Header() {
                     </div>
 
                     {/* Resources column */}
-                    <div>
+                    {/* <div>
                       <h3 className="font-semibold text-base mb-6 text-foreground">Resources</h3>
                       <div className="space-y-4">
                         <a href="#" className="block text-sm text-primary hover:underline leading-relaxed">
@@ -168,7 +168,7 @@ export default function Header() {
                           Rent Guide
                         </a>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
