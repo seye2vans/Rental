@@ -114,10 +114,10 @@ export default function ListingsPanel({ searchLocation = "", filters }: Listings
   return (
     <div className="bg-white w-full h-full flex flex-col">
       <div className="sticky top-0 bg-white border-b p-4 sm:p-6 z-20">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center ">
           {/* Left Section – Title & Count */}
           <div className="flex-1">
-            <h1 className="text-xl sm:text-5xl font-bold text-foreground">Rental Listings</h1>
+            <h1 className="text-xl sm:text-4xl font-bold text-foreground">Rental Listings</h1>
             <p className="text-muted-foreground text-sm mt-1">
               {searchLocation
                 ? `${listingCount} rental${listingCount !== 1 ? "s" : ""} found in ${searchLocation}`
